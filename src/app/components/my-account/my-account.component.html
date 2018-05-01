@@ -1,0 +1,173 @@
+<div class="container" style="margin-top: 80px;">
+<section>
+  <!-- Grid row -->
+  <div class="row mt-4 pt-1">
+
+    <!--Grid column-->
+    <div class="col-lg-8 col-md-12 mb-3 mb-md-4 pb-lg-2">
+      <!--Image -->
+      <div class="view zoom z-depth-1">
+        <img src="https://mdbootstrap.com/img/Photos/Others/product1.jpg" class="img-fluid" alt="sample image">
+        <div class="mask rgba-white-light">
+          <div class="dark-grey-text d-flex align-items-center pt-4 ml-lg-3 pl-lg-3 pl-md-5">
+            <div>
+              <a>
+                <span class="badge badge-danger">bestseller</span>
+              </a>
+              <h2 class="card-title font-weight-bold pt-2">
+                <strong>This is news title</strong>
+              </h2>
+              <p class="hidden show-ud-up">Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
+              <a class="btn btn-danger btn-sm btn-rounded clearfix d-none d-md-inline-block waves-effect waves-light"> Read more</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!--Image -->
+    </div>
+    <!--Grid column-->
+
+    <!--Grid column-->
+    <div class="col-lg-4 col-md-12 mb-4">
+      <!--Image -->
+      <div class="view zoom z-depth-1 photo">
+        <img src="https://mdbootstrap.com/img/Photos/Others/product3.jpg" class="img-fluid" alt="sample image">
+        <div class="mask rgba-stylish-strong">
+          <div class="white-text center-elem text-center w-75">
+            <div class="">
+              <a>
+                <span class="badge badge-info">NEW</span>
+              </a>
+              <h2 class="card-title font-weight-bold pt-2">
+                <strong>This is news title</strong>
+              </h2>
+              <p class="">Lorem ipsum dolor sit amet, consectetur. </p>
+              <a class="btn btn-info btn-sm btn-rounded waves-effect waves-light"> Read more</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!--Image -->
+
+    </div>
+    <!--Grid column-->
+
+  </div>
+  <!--Grid row-->
+
+</section>
+
+</div>
+
+<div class="container" style="margin-bottom: 100px;">
+  <div class="row">
+    <div class="col-xs-3"></div>
+    <div class="col-xs-9">
+      <div class="panel-group" style="width: 1123px; margin-left: 9px;">
+        <div class="panel panel-default panel-faq" style="background-color: #ededed;; margin-top: 20px;">
+          <mat-tab-group>
+            <mat-tab label="Login">
+              <div class="container" style="margin-top: 20px;">
+                <div *ngIf="loginError" style="color: red">
+                  Incorrect username or password
+                </div>
+                <form (ngSubmit)="onLogin()" style="margin-bottom: 20px;">
+                  <div class="form-group">
+                    <label for="username">Username *</label>
+                    <input type="text" 
+                           class="form-control" 
+                           name="username" 
+                           id="username" 
+                           required="required" 
+                           autofocus="autofocus" 
+                           [(ngModel)]="credential.username">
+                    <p style="color: #828282;">Enter your username</p>
+                  </div>
+                  <div class="form-group">
+                    <label for="password">Password *</label>
+                    <input type="password" 
+                           class="form-control" 
+                           name="password" 
+                           id="password" 
+                           required="required" 
+                           autofocus="autofocus" 
+                           [(ngModel)]="credential.password">
+                    <p style="color: #828282;">Enter your password</p>
+                  </div>
+                  <button type="submit" mat-raised-button color="primary">Login</button>
+                </form>
+              </div>
+            </mat-tab>
+            <mat-tab label="new-account">
+              <div class="container" style="margin-top: 20px;">
+                <div class="alert alert-info" *ngIf="emailSent">
+                  An email has bean sent to the email address you just registred.
+                  please validate your email and update your password info.
+                </div>
+                <form (ngSubmit)="onNewAccount()" style="margin-bottom: 20px;">
+                  <div class="form-group">
+                    <label for="newUsername">Username *</label>
+                    &nbsp;<span *ngIf="usernameExists" style="color: red;">
+                           Username already exists. Choose different one.
+                          </span>
+                    <input type="text" 
+                           class="form-control" 
+                           name="username" 
+                           id="newUsername" 
+                           required="required" 
+                           [(ngModel)]="username">
+                    <p style="color: #828282;">Enter your username</p>
+                  </div>
+                  <div class="form-group">
+                    <label for="email">Email Address*</label>
+                    &nbsp;<span *ngIf="emailExists" style="color: red;">
+                      email already exists. Choose different one.
+                     </span>
+                    <input type="email" 
+                           class="form-control" 
+                           name="email" 
+                           id="email" 
+                           required="required" 
+                           autofocus="autofocus" 
+                           [(ngModel)]="email">
+                    <p style="color: #828282;">A valid e-mail address. All e-mails from the system will be sent to this address.</p>
+                  </div>
+                  <button type="submit" mat-raised-button color="primary">Create new account</button>
+                </form>
+              </div>
+            </mat-tab>
+          
+            <mat-tab label="Forget Password">
+              <div class="container" style="margin-top: 20px;">
+                <div class="alert alert-warning" *ngIf="emailNotExists">
+                  email doesn't exists.
+                </div>
+                <div class="alert alert-success" *ngIf="forgetPasswordEmailSent">
+                  email sent.
+                </div>
+                <form (ngSubmit)="onForgetPassword()" style="margin-bottom: 20px;">
+                  <div class="form-group">
+                    <label for="recoverEmail">Your Email Address *</label>
+                    <input type="email" 
+                           class="form-control" 
+                           name="recoverEmail" 
+                           id="recoverEmail" 
+                           required="required" 
+                           [(ngModel)]="recoverEmail">
+                    <p style="color: #828282;">Enter your registered email address.</p>
+                  </div>
+                  <button type="submit" mat-raised-button color="primary">Submit</button>
+                </form>
+              </div>
+            </mat-tab>
+          
+
+          </mat-tab-group>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

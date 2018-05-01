@@ -1,0 +1,159 @@
+<div class="container" style="margin-top: 80px;">
+
+  <!--Main layout-->
+  <main class="mt-5 pt-4">
+    <div class="container dark-grey-text mt-5">
+
+      <!--Grid row-->
+      <div class="row wow fadeIn">
+
+        <!--Grid column-->
+        <div class="col-md-6 mb-4">
+
+          <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/14.jpg" class="img-fluid" alt="">
+
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-md-6 mb-4">
+          <h3><span *ngIf="addBookSuccess" style="color: #0b2e13">
+          <i class="fa fa-check" style="color: forestgreen">Added to cart.</i>
+        </span></h3>
+          <h3><span *ngIf="notEnoughStock"
+                    style="color: red">Oops, only <span>{{book.inStockNumber}}</span> In Stock.</span></h3>
+          <!--Content-->
+          <div class="p-4">
+            <div style="margin-bottom: -150px;" class="mb-3">
+              <p><strong>{{book.title}}</strong></p>
+            </div>
+            <div style="margin-left: 250px;" class="mb-3">
+              <h4 *ngIf="book.inStockNumber>10" style="color: green;">InStock</h4>
+              <h4 *ngIf="book.inStockNumber<10 && book.inStockNumber>0" style="color: green;">
+                Only <span>{{book.inStockNumber}}</span> In Stock
+              </h4>
+              <h4 *ngIf="book.inStockNumber==0" style="color: darkred;">Unavailable</h4>
+            </div>
+
+            <p class="lead">
+              <span class="mr-1">
+                <del>${{book.listPrice | number: '1.2-2'}}</del>
+              </span>
+              <span>${{book.ourPrice | number: '1.2-2'}}</span>
+            </p>
+
+            <p class="lead font-weight-bold">Description</p>
+
+            <p>{{book.description}}</p>
+
+            <form class="d-flex justify-content-left">
+              <!-- Default input -->
+              <input type="number" name="qty" [(ngModel)]="qty"  aria-label="Search" class="form-control" style="width: 100px">
+              <button class="btn btn-primary btn-md my-0 p"
+                      type="submit"
+                      [disabled]="book.inStockNumber==0"
+                      (click)="onAddToCart()">Add to cart
+                <i class="fa fa-shopping-cart ml-1"></i>
+              </button>
+
+            </form>
+
+          </div>
+          <!--Content-->
+
+        </div>
+        <!--Grid column-->
+
+      </div>
+      <!--Grid row-->
+
+      <hr>
+
+      <!--Grid row-->
+      <div class="row d-flex justify-content-center wow fadeIn">
+
+        <!--Grid column-->
+        <div class="col-md-6 text-center">
+
+          <h4 class="my-4 h4">Additional information</h4>
+
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus suscipit modi sapiente illo soluta odit
+            voluptates,
+            quibusdam officia. Neque quibusdam quas a quis porro? Molestias illo neque eum in laborum.</p>
+
+        </div>
+        <!--Grid column-->
+
+      </div>
+      <!--Grid row-->
+
+      <!--Grid row-->
+      <div class="row wow fadeIn">
+
+        <!--Grid column-->
+        <div class="col-lg-4 col-md-12 mb-4">
+
+          <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/11.jpg" class="img-fluid" alt="">
+
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-lg-4 col-md-6 mb-4">
+
+          <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/12.jpg" class="img-fluid" alt="">
+
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-lg-4 col-md-6 mb-4">
+
+          <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/13.jpg" class="img-fluid" alt="">
+
+        </div>
+        <!--Grid column-->
+
+      </div>
+      <!--Grid row-->
+
+    </div>
+  </main>
+<!--
+  <div class="row">
+    <div class="row" style="margin-top: 120px;">
+      <div class="col-xs-3">
+        <a routerLink="/book-list">Back To list</a><br>
+        <img class="img-thumbnail"
+             src="{{serverPath}}/image/book/{{book.id}}.png"
+             alt="">
+      </div>
+
+      <div class="col-xs-9">
+        <h3><span *ngIf="addBookSuccess" style="color: #0b2e13">
+          <i class="fa fa-check" style="color: forestgreen">Added to cart.</i>
+        </span></h3>
+        <h3><span *ngIf="notEnoughStock"
+                  style="color: red">Oops, only <span>{{book.inStockNumber}}</span> In Stock.</span></h3>
+        <h3>{{book.title}}</h3>
+        <div class="row">
+          <div class="col-xs-5">
+            <h5><strong>Author: </strong><span>{{book.author}}</span></h5>
+            <p><strong>Publisher: </strong>{{book.publisher}}</p>
+            <p><strong>Publication Date: </strong>{{book.publicationDate}}</p>
+            <p><strong>Language: </strong>{{book.language}}</p>
+            <p><strong>Category: </strong>{{book.category}}</p>
+            <p>
+              <strong><span>{{book.format}}</span></strong>
+              <span>{{book.numberOfPages}}</span> pages
+            </p>
+            <p><strong>ISBN:</strong><span>{{book.isbn}}</span></p>
+            <p><strong>Shipping Weight:</strong><span>{{book.shippingWeight}}</span> ounces</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+-->
+</div>

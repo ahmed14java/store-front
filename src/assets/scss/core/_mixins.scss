@@ -1,0 +1,292 @@
+ 
+@function breakpoint-next($name, $breakpoints: $grid-breakpoints, $breakpoint-names: map-keys($breakpoints)) {
+  $n: index($breakpoint-names, $name);
+  @return if($n < length($breakpoint-names), nth($breakpoint-names, $n + 1), null);
+}
+
+@function breakpoint-min($name, $breakpoints: $grid-breakpoints) {
+  $min: map-get($breakpoints, $name);
+  @return if($min != 0, $min, null);
+}
+
+@function breakpoint-max($name, $breakpoints: $grid-breakpoints) {
+  $next: breakpoint-next($name, $breakpoints);
+  @return if($next, breakpoint-min($next, $breakpoints) - .02px, null);
+}
+
+@mixin media-breakpoint-up($name, $breakpoints: $grid-breakpoints) {
+  $min: breakpoint-min($name, $breakpoints);
+  @if $min {
+    @media (min-width: $min) {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+}
+
+@mixin media-breakpoint-down($name, $breakpoints: $grid-breakpoints) {
+  $max: breakpoint-max($name, $breakpoints);
+  @if $max {
+    @media (max-width: $max) {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+}
+
+@mixin media-breakpoint-between($lower, $upper, $breakpoints: $grid-breakpoints) {
+  $min: breakpoint-min($lower, $breakpoints);
+  $max: breakpoint-max($upper, $breakpoints);
+
+  @if $min != null and $max != null {
+    @media (min-width: $min) and (max-width: $max) {
+      @content;
+    }
+  } @else if $max == null {
+    @include media-breakpoint-up($lower, $breakpoints) {
+      @content;
+    }
+  } @else if $min == null {
+    @include media-breakpoint-down($upper, $breakpoints) {
+      @content;
+    }
+  }
+}
+
+@mixin media-breakpoint-only($name, $breakpoints: $grid-breakpoints) {
+  $min: breakpoint-min($name, $breakpoints);
+  $max: breakpoint-max($name, $breakpoints);
+
+  @if $min != null and $max != null {
+    @media (min-width: $min) and (max-width: $max) {
+      @content;
+    }
+  } @else if $max == null {
+    @include media-breakpoint-up($name, $breakpoints) {
+      @content;
+    }
+  } @else if $min == null {
+    @include media-breakpoint-down($name, $breakpoints) {
+      @content;
+    }
+  }
+}
+
+@function breakpoint-infix($name, $breakpoints: $grid-breakpoints) {
+  @return if(breakpoint-min($name, $breakpoints) == null, "", "-#{$name}");
+}
+
+@mixin placeholder {
+  &::placeholder {
+    @content
+  }
+}
+
+
+@mixin make-button ($name, $color) {
+  .btn-#{$name} {
+    background-color: $color !important;
+    color: $white !important;
+    &:hover {
+      background-color: lighten($color, 5%);
+    }
+    &:focus,
+    &.focus {
+      @extend .z-depth-1-half;
+    }
+    &:focus,
+    &:active,
+    &.active {
+      background-color: darken($color, 20%);
+    }
+    &.dropdown-toggle {
+      background-color: $color!important;
+      &:hover,
+      &:focus {
+        background-color: lighten($color, 5%) !important;
+      }
+    }
+    &:not([disabled]):not(.disabled):active,
+    &:not([disabled]):not(.disabled).active,
+    .show > &.dropdown-toggle {
+      @extend .z-depth-1-half;
+      background-color: darken($color, 20%) !important;
+    }
+    &:not([disabled]):not(.disabled):active:focus,
+    &:not([disabled]):not(.disabled).active:focus,
+    .show > &.dropdown-toggle:focus {
+      @extend .z-depth-1-half;
+    }
+  }
+  .#{$name}-ic {
+    color: $color !important;
+    &:hover,
+    &:focus {
+      color: $color;
+    }
+  }
+}
+
+@mixin make-outline-button ($name, $color) {
+  .btn-outline-#{$name} {
+    border: 2px solid $color !important;
+    background-color: transparent !important;
+    color: $color !important;
+    &:hover,
+    &:focus,
+    &:active,
+    &:active:focus,
+    &.active {
+      border-color: $color !important;
+      background-color: transparent !important;
+      color: $color !important;
+    }
+    &:not([disabled]):not(.disabled):active,
+    &:not([disabled]):not(.disabled).active,
+    .show > &.dropdown-toggle {
+      @extend .z-depth-1-half;
+      background-color: transparent !important;
+      border-color: $color !important;
+    }
+    &:not([disabled]):not(.disabled):active:focus,
+    &:not([disabled]):not(.disabled).active:focus,
+    .show > &.dropdown-toggle:focus {
+      @extend .z-depth-1-half;
+    }
+  }
+}
+
+@mixin make-gradient($name, $value) {
+  .#{$name}-gradient {
+    background: linear-gradient(40deg, map-get($value, start), map-get($value, end)) !important;
+  }
+}
+
+@mixin make-gradient-button($name, $value) {
+  .btn {
+    &.#{$name}-gradient {
+      transition: .5s ease;
+      color: $white;
+      &:hover,
+      &:focus,
+      &:active,
+      &:active:focus
+      &.active {
+        background: linear-gradient(40deg, lighten(map-get($value, start), 5%), lighten(map-get($value, end), 5%));
+      }
+    }
+  }
+}
+
+@mixin button-size($padding-y, $padding-x, $font-size) {
+  padding: $padding-y $padding-x;
+  font-size: $font-size;
+}
+
+@mixin make-badge($name, $color) {
+  .badge-#{$name} {
+    @function set-notification-text-color($color) {
+      @if (lightness($color) > 70) {
+        @return $black; 
+      } @else {
+        @return $white; 
+      }
+    }
+    background-color: $color !important;
+    color: set-notification-text-color($color) !important;
+  }
+}
+
+@mixin make-input($label-font-size, $label-active-font-size, $top, $prefix-font-size, $margin-left, $width) {
+  label {
+    font-size: $label-font-size;
+    &.active {
+      font-size: $label-active-font-size;
+    }
+  }
+  .prefix {
+    top: $top;
+    font-size: $prefix-font-size;
+    ~ input, ~ textarea {
+      margin-left: $margin-left;
+      width: $width;
+    }
+    ~ label {
+      margin-left: $margin-left;
+    }
+  }
+}
+
+@mixin make-navbar($color-0, $background-image, $color, $color-2, $color-3) {
+  .navbar-nav {
+    .nav-item {
+      .nav-link {
+        &.disbled {
+          color: $color-0;
+          &:hover {
+            color: $color-0;
+          }
+        }
+      }
+    }
+  }
+  .navbar-toggler-icon {
+    background-image: $background-image;
+    cursor: pointer;
+  }
+  .breadcrumb,
+  .navbar-nav {
+    .nav-item {
+      .nav-link {
+        color: $color;
+        transition: $navbar-nav-transition;
+        &:hover {
+          color: $color-2;
+        }
+      }
+      &.active > .nav-link {
+        background-color: $color-3;
+        &:hover {
+          color: $color;
+        }
+      }
+    }
+  }
+  .navbar-toggler {
+    color: $color;
+  }
+  form {
+    .md-form {
+      input {
+        border-bottom: 1px solid $color;
+        &:focus:not([readonly]) {
+          border-color: $input-focus-color;
+        }
+      }
+      .form-control {
+        color: $color;
+        @include placeholder {
+          color: $color;
+          font-weight: $navbar-font-weight;
+        }
+      }
+    }
+  }
+}
+
+@mixin make-btn-floating($width, $height, $font-size, $line-height) {
+  width: $width;
+  height: $height;
+  i {
+    font-size: $font-size;
+    line-height: $line-height;
+  }
+}
+
+@mixin keyframes($animation-name) {
+  @keyframes #{$animation-name} {
+    @content;
+  }
+}

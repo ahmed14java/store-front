@@ -1,0 +1,88 @@
+<nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
+  <div class="container">
+
+    <!-- Brand -->
+    <a class="navbar-brand waves-effect"
+       routerLink="home">
+      <strong class="blue-text">Book Store</strong>
+    </a>
+
+    <!-- Collapse -->
+    <button class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Links -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+      <!-- Left -->
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link waves-effect" routerLingk="home">Home
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link waves-effect" routerLink="book-list">Books</a>
+        </li>
+        <form style="margin-left: 20px;" (ngSubmit)="onSearchByTitle()" class="form-inline">
+          <div class="md-form mt-0">
+            <input name="searchByTitle"
+                   [(ngModel)]="keyword"
+                   class="form-control mr-sm-2"
+                   type="text"
+                   placeholder="Search"
+                   aria-label="Search">
+          </div>
+          <button type="submit" mat-raised-button color="primary">Search</button>
+        </form>
+
+      </ul>
+
+      <!-- Right -->
+      <ul class="navbar-nav nav-flex-icons">
+        <li class="nav-item" *ngIf="loggedIn">
+          <a class="nav-link waves-effect">
+            <span class="badge red z-depth-1 mr-1"> 1 </span>
+            <i class="fa fa-shopping-cart"></i>
+            <span class="clearfix d-none d-sm-inline-block"> Cart </span>
+          </a>
+        </li>
+        <li class="nav-item dropdown" *ngIf="loggedIn">
+            <a href="#"
+               class="nav-link dropdown-toggle"
+               id="navDropDownLink"
+               data-toggle="dropdown"
+               aria-haspopup="true"
+               aria-expanded="false">
+               <i class="fa fa-users" aria-hidden="true"></i>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navDropDownLink">
+                <a class="dropdown-item" routerLink="my-account">
+                  <i class="fa fa-user-o" aria-hidden="true"></i> Account</a>
+                <a class="dropdown-item" routerLink="my-profile">
+                  <i class="fa fa-user" aria-hidden="true"></i> Profile</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" (click)="logout()" >
+                  <i class="fa fa-power-off" aria-hidden="true"></i> Logout</a>
+            </div>
+        </li>
+
+        <li class="nav-item" *ngIf="!loggedIn">
+            <a class="nav-link waves-effect" routerLink="my-account">
+                <i class="fa fa-arrow-right" aria-hidden="true"></i> Login
+            </a>
+        </li>
+
+      </ul>
+
+    </div>
+
+  </div>
+</nav>
